@@ -21,4 +21,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="double_press_to_exit">再次点击退出</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
