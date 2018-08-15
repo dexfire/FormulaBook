@@ -1,17 +1,31 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.dexfire.formula.FormulaEditorFragment">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
-    <LinearLayout
+    <!--LinearLayout
         android:id="@+id/fragment_formula_editor_quickbar"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:gravity="bottom"/>
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal" />
+
+    <EditText
+        android:id="@+id/fragment_formula_editor_editor"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:gravity="start"
+        android:text="@string/hello_blank_fragment" />
+    <Space
+        android:id="@+id/fragment_formula_editor_slider"
+        android:layout_below="@id/fragment_formula_editor_editor"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/!-->
+    <WebView
+        android:id="@+id/fragment_formula_editor_previewer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

@@ -1,12 +1,24 @@
 package com.dexfire.formula
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.app.Fragment
+import android.os.Environment
+import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import com.manuelpeinado.fadingactionbar.FadingActionBarHelper
+import com.manuelpeinado.fadingactionbar.FadingActionBarHelperBase
+import kotlinx.android.synthetic.*
+import kotlinx.android.synthetic.main.main.*
 
 
 /**
@@ -22,9 +34,10 @@ class MathFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
-
+    private var mWebView: WebView? = null;
     private var mListener: OnFragmentInteractionListener? = null
-
+    private var TAG:String = "MathFragment"
+    private val DEBUG = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -35,14 +48,50 @@ class MathFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_math, container, false)
+        var fab = FadingActionBarHelper();
+        fab.actionBarBackground<FadingActionBarHelper>(R.drawable.design_snackbar_background);
+        return inflater!!.inflate(R.layout.fragment_formula_editor, container, false)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        verifyPermissions()
+        mWebView = view!!.findViewById(R.id.fragment_formula_editor_previewer)
+        var mWebSettings = mWebView!!.settings;
+        mWebSettings.javaScriptEnabled = true
+        mWebSettings.allowFileAccess = true
+        mWebSettings.builtInZoomControls = false
+        mWebSettings.allowContentAccess = true
+        mWebSettings.allowFileAccessFromFileURLs = true
+        mWebSettings.allowUniversalAccessFromFileURLs = true
+        if(DEBUG) Log.i(TAG,"onActivityCreated() - ExternalStorageDirectory = "+Environment.getExternalStorageDirectory().absolutePath)
+        mWebView!!.loadUrl("file://"+Environment.getExternalStorageDirectory().absolutePath+"/Formula/index.html")
+        var fab = activity.findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener {
+            Snackbar.make(it, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            if(mWebView==null) Log.e("Formula - dexfire","webview is null!")
+            if(DEBUG)Log.w("Formula - dexfire","loading webpage...")
+            mWebView!!.loadUrl("content://com.dexfire.formula.localhtmlprovider/sdcard/Formula/index.html")
+        }
+    }
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         if (mListener != null) {
             mListener!!.onFragmentInteraction(uri)
+        }
+    }
+
+    fun verifyPermissions() {
+        try{
+            var permit:Int = ActivityCompat.checkSelfPermission(context,"android.permission.WRITE_EXTERNAL_STORAGE")
+            var result = 0
+            if(permit != PackageManager.PERMISSION_GRANTED)
+                ActivityCompat.requestPermissions(activity,
+                        Array<String>(2){"android.permission.WRITE_EXTERNAL_STORAGE";
+                            "android.permission.READ_EXTERNAL_STORAGE"},result)
+        }catch (e:Exception){
+            e.printStackTrace()
         }
     }
 
@@ -53,6 +102,7 @@ class MathFragment : Fragment() {
         } else {
             throw RuntimeException(context!!.toString() + " must implement OnFragmentInteractionListener")
         }
+
     }
 
     override fun onDetach() {

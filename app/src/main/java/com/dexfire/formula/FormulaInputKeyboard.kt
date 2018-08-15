@@ -14,6 +14,7 @@ import android.widget.SlidingDrawer
 /**
  * TODO: document your custom view class.
  */
+@SuppressWarnings("Deprecated")
 class FormulaInputKeyboard : SlidingDrawer {
     private var mExampleString: String? = null
     private var mExampleColor = Color.RED
@@ -22,9 +23,6 @@ class FormulaInputKeyboard : SlidingDrawer {
     private var mTextWidth: Float = 0f
     private var mTextHeight: Float = 0f
 
-    constructor(context: Context) : super(context) {
-        init(null, 0)
-    }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init(attrs, 0)
@@ -88,5 +86,6 @@ class FormulaInputKeyboard : SlidingDrawer {
                 paddingLeft + (contentWidth - mTextWidth) / 2,
                 paddingTop + (contentHeight + mTextHeight) / 2,
                 mTextPaint!!)
+
     }
 }

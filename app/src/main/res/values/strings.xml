@@ -5,7 +5,6 @@
     <string name="show">Show</string>
     <string name="clear">Clear</string>
     <string name="example">Example</string>
-
     <string-array name="tex_examples">
         <item>\\int_{-\\infty}^{\\infty} e^{-x^2}\\, dx = \\sqrt{\\pi}</item>
         <item>\\sum_{n=1}^{\\infty}\\frac1{n^2}=\\frac{\\pi^2}6</item>
@@ -20,8 +19,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="double_press_to_exit">再次点击退出</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="title_activity_main">MainActivity</string>
+    <string name="fragment_math">fragment_math</string>
+    <string name="fragment_home">fragment_home</string>
 </resources>
